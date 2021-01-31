@@ -18,7 +18,9 @@
 <div id="app">
 
 <router-link :to="{name : 'home' }">home</router-link>
-<router-link :to="{name : 'test' }">test</router-link>
+<router-link :to="{name : 'login' }">login</router-link>
+
+
 
 
 <router-view></router-view>

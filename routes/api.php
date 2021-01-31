@@ -14,6 +14,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(["prefix" => "v1", "namespace" => "App\Http\Controllers\API"], function ($router) {
+
+    // below mention routes are public, user can access those without any restriction
+    Route::group(["prefix" => "auth"], function () {
+
+        // create new user
+        Route::post("register", "AuthController@register");
+
+        // login user
+        Route::post("login", "AuthController@login");
+
+        // refresh JWt token
+        Route::get("refresh", "AuthController@refresh");
+    });
+
+
+    //using the guard api
+    Route::group(["middleware" => "auth:api", "prefix" => "auth"], function () {
+        // logout user from application
+        Route::post('logout', "AuthController@logout");
+        // get user info
+        Route::get("user", "AuthController@user");
+    });
+
+    Route::apiResource("channels", "ChannelController");
+    Route::apiResource("discussions", "DiscussionController");
+    Route::apiResource("replies", "ReplyController");
 });

@@ -28,6 +28,8 @@ Route::get('login/{provider}', [App\Http\Controllers\Auth\SocialAccountControlle
 Route::get('login/{provider}/callback', [App\Http\Controllers\Auth\SocialAccountController::class, 'handleProviderCallback']);
 
 
+
+
 Route::get('/', function () {
     return view('welcome');
 });
