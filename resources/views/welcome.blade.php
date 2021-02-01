@@ -16,8 +16,9 @@
 <body>
 
 <div id="app">
+<router-link :to="{name : 'welcome' }">home</router-link>
 
-<router-link :to="{name : 'home' }">home</router-link>
+<router-link :to="{name : 'home' }">dashboard</router-link>
 <router-link :to="{name : 'login' }">login</router-link>
 
 

@@ -4,22 +4,28 @@ import * as types from "../mutations_types"
 
 
 const state = {
-    user : null,
-    token : Cookies.get('token')
+    user: null,
+    token: Cookies.get("token"),
+    auth_err: null,
+    loading: false,
+    isLogged: false
 }
 
 const getters = {
-    user : state=>state.user,
-    token : state=>state.token,
-    check : state=>state.user!= null,
+    user: state => state.user,
+    token: state => state.token,
+    check: state => state.isLogged,
+    authError: state => state.auth_err,
+    isLoading: state => state.loading
 }
 
 //mutations
 
 const mutations={
-    [types.SAVE_TOKEN](state,{token,remember}){
-        state.token = token ,
-        Cookies.set('token',token,{expires:remember ?365 :null})
+    [types.LOGIN](state) {
+        state.loading = true;
+        state.auth_err = null;
+        state.isLogged = false;
     },
     [types.LOGIN_SUCCESS](state, { token, rembmer }) {
         state.loading = false;

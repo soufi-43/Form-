@@ -36,6 +36,14 @@
 import Vue from 'vue'
 import {Form} from 'vform'
 import {mapGetters} from 'vuex'
+import HasErrorTailwind from '../../components/HasErrorTailwind'
+import { ClipLoader } from 'vue-spinner/dist/vue-spinner.min.js'
+
+
+
+Vue.component(HasErrorTailwind.name, HasErrorTailwind)
+Vue.component('clip-loader', ClipLoader)
+
 
 export default {
     data() {
