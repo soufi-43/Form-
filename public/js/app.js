@@ -2006,6 +2006,85 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_2__.default({
 
 /***/ }),
 
+/***/ "./resources/js/middlewares/auth-check.js":
+/*!************************************************!*\
+  !*** ./resources/js/middlewares/auth-check.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ checkAuth)
+/* harmony export */ });
+function checkAuth(_ref) {
+  var next = _ref.next,
+      store = _ref.store;
+  console.log("check-auth middleware run ...");
+
+  if (!store.getters["auth/check"] && store.getters["auth/token"]) {
+    store.dispatch("auth/fetchUser");
+    return next();
+  } else if (store.getters["auth/check"] && store.getters["auth/token"]) {
+    return next();
+  } else {
+    return next({
+      name: "login"
+    });
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/js/middlewares/auth.js":
+/*!******************************************!*\
+  !*** ./resources/js/middlewares/auth.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ auth)
+/* harmony export */ });
+function auth(_ref) {
+  var next = _ref.next,
+      store = _ref.store;
+  console.log("auth middlware run ...");
+  if (!store.getters["auth/check"]) return next({
+    name: "login"
+  });else return next();
+}
+
+/***/ }),
+
+/***/ "./resources/js/middlewares/guest.js":
+/*!*******************************************!*\
+  !*** ./resources/js/middlewares/guest.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ guest)
+/* harmony export */ });
+function guest(_ref) {
+  var next = _ref.next,
+      store = _ref.store;
+  console.log("guest middleware run");
+
+  if (store.getters["auth/token"]) {
+    return next({
+      name: "home"
+    });
+  } else {
+    return next();
+  }
+}
+
+/***/ }),
+
 /***/ "./resources/js/routes/index.js":
 /*!**************************************!*\
   !*** ./resources/js/routes/index.js ***!
@@ -2020,15 +2099,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_auth_Login__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../pages/auth/Login */ "./resources/js/pages/auth/Login.vue");
 /* harmony import */ var _pages_Home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../pages/Home */ "./resources/js/pages/Home.vue");
 /* harmony import */ var _pages_Welcome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../pages/Welcome */ "./resources/js/pages/Welcome.vue");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var _middlewares_guest__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../middlewares/guest */ "./resources/js/middlewares/guest.js");
+/* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/index */ "./resources/js/store/index.js");
+/* harmony import */ var _routes_middlewarePipeline__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../routes/middlewarePipeline */ "./resources/js/routes/middlewarePipeline.js");
+/* harmony import */ var _middlewares_auth_check__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../middlewares/auth-check */ "./resources/js/middlewares/auth-check.js");
+/* harmony import */ var _middlewares_auth__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../middlewares/auth */ "./resources/js/middlewares/auth.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_4__.default);
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__.default({
+
+
+
+
+
+
+vue__WEBPACK_IMPORTED_MODULE_8__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_9__.default);
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_9__.default({
   mode: 'history',
   routes: [{
     path: '/',
@@ -2037,14 +2132,69 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__.default({
   }, {
     path: '/login',
     component: _pages_auth_Login__WEBPACK_IMPORTED_MODULE_0__.default,
-    name: 'login'
+    name: 'login',
+    meta: {
+      middleware: [_middlewares_guest__WEBPACK_IMPORTED_MODULE_3__.default]
+    }
   }, {
     path: '/home',
     component: _pages_Home__WEBPACK_IMPORTED_MODULE_1__.default,
-    name: 'home'
+    name: 'home',
+    meta: {
+      middleware: [_middlewares_auth__WEBPACK_IMPORTED_MODULE_7__.default, _middlewares_auth_check__WEBPACK_IMPORTED_MODULE_6__.default]
+    }
   }]
 });
+router.beforeEach(function (to, from, next) {
+  if (!to.meta.middleware) return next();
+  var middleware = to.meta.middleware;
+  var context = {
+    to: to,
+    from: from,
+    next: next,
+    store: _store_index__WEBPACK_IMPORTED_MODULE_4__.default
+  };
+  return middleware[0](_objectSpread(_objectSpread({}, context), {}, {
+    next: (0,_routes_middlewarePipeline__WEBPACK_IMPORTED_MODULE_5__.default)(context, middleware, 1)
+  }));
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
+
+/***/ }),
+
+/***/ "./resources/js/routes/middlewarePipeline.js":
+/*!***************************************************!*\
+  !*** ./resources/js/routes/middlewarePipeline.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function middlewarePipeline(context, middleware, index) {
+  var nextMiddleware = middleware[index];
+
+  if (!nextMiddleware) {
+    return context.next;
+  }
+
+  return function () {
+    var nextPipeline = middlewarePipeline(context, middleware, index + 1);
+    nextMiddleware(_objectSpread(_objectSpread({}, context), {}, {
+      next: nextPipeline
+    }));
+  };
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (middlewarePipeline);
 
 /***/ }),
 
