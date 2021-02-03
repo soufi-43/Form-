@@ -20,6 +20,8 @@
 
 <router-link :to="{name : 'home' }">dashboard</router-link>
 <router-link :to="{name : 'login' }">login</router-link>
+<router-link :to="{name : 'register' }">register</router-link>
+
 
 
 

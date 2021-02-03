@@ -10,6 +10,7 @@ import store from '../store/index'
 import middlewarePipeline from '../routes/middlewarePipeline'
 import checkAuth from "../middlewares/auth-check"
 import auth from "../middlewares/auth"
+import Register from "../pages/auth/Register"
 
 
 
@@ -33,6 +34,15 @@ const router = new VueRouter({
             meta : {
                 middleware : [guest]
             }
+        },
+        {
+            path : '/register',
+            component : Register ,
+            name : 'register',
+            meta : {
+                middleware : [guest]
+            }
+
         },
         {
             path : '/home',
