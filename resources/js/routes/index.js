@@ -6,6 +6,8 @@ import VueRouter from 'vue-router'
 import Vue from 'vue'
 import guest from '../middlewares/guest'
 import store from '../store/index'
+import SignleDiscussion from '../pages/SingleDiscussion.vue'
+import Index from '../pages/Index'
 
 import middlewarePipeline from '../routes/middlewarePipeline'
 import checkAuth from "../middlewares/auth-check"
@@ -51,6 +53,19 @@ const router = new VueRouter({
             meta : {
                 middleware : [auth,checkAuth]
             }
+            ,
+            children: [
+              {
+                path: "",
+                component: Index,
+                name: "home",
+              },
+              {
+                path: "discussion/:channel/:discussion",
+                component: SignleDiscussion,
+                name: "discussion"
+              }
+            ]
         },
 
     ]

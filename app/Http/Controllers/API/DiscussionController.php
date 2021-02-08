@@ -7,6 +7,7 @@ use App\Http\Resources\DiscussionResource;
 use App\Models\Discussion;
 use Illuminate\Http\Request;
 use Validator;
+use Illuminate\Support\Str;
 
 class DiscussionController extends Controller
 {
@@ -43,7 +44,7 @@ class DiscussionController extends Controller
         $discussion = new Discussion([
             "title" => $request->title,
             "content" => $request->content,
-            "slug" => $request->slug,
+            "slug" => Str::slug($request->title, "-"),
             "user_id" => $request->user_id,
             "channel_id" => $request->channel_id
         ]);
@@ -88,7 +89,7 @@ class DiscussionController extends Controller
 
         $discussion->title = $request->title;
         $discussion->content = $request->content;
-        $discussion->slug = $request->title;
+        $discussion->slug = Str::slug($request->title, "-");
         $discussion->channel_id = $request->channel_id;
 
         $discussion->save();

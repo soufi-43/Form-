@@ -22,7 +22,7 @@ class DiscussionResource extends JsonResource
             "channel" => $this->channel,
             "slug" => $this->slug,
             //"replies" => ReplyResource::collection($this->replies) ,
-            "replies_count" => $this->replies->count(),
+            //"replies_count" => $this->replies->count(),
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
             "published_at" => $this->created_at->diffForHumans()
