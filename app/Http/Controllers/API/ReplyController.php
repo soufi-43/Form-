@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Resources\ReplyResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Reply;
+use App\Models\Reply ;
 use Validator;
 use App\Notifications\ReplyAdded;
 
@@ -48,7 +48,7 @@ class ReplyController extends Controller
 
         $reply->save();
 
-        $reply->discussion->user->notify(new ReplyAdded($reply));
+        //$reply->discussion->user->notify(new ReplyAdded($reply));
 
         return new ReplyResource($reply);
     }
