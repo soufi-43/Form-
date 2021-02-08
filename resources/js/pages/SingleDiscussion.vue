@@ -54,6 +54,7 @@
         </span>
       </div>
       <div>
+        <yimo-vue-editor v-model="reply"></yimo-vue-editor>
         <button
           class="bg-btnBlueColor text-white py-2 px-4 rounded-full uppercase text-sm"
           @click="storeReply"
@@ -64,7 +65,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-//import YimoVueEditor from "yimo-vue-editor";
+import YimoVueEditor from "yimo-vue-editor";
 export default {
   data() {
     return {
@@ -72,7 +73,7 @@ export default {
     };
   },
   components: {
-    //YimoVueEditor
+    YimoVueEditor
   },
   mounted() {
     this.$store.dispatch(
@@ -95,3 +96,4 @@ export default {
   }
 };
 </script>
+
