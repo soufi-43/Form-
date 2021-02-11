@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Reply ;
 use Validator;
 use App\Notifications\ReplyAdded;
+use SebastianBergmann\Environment\Console;
 
 class ReplyController extends Controller
 {
@@ -48,7 +49,9 @@ class ReplyController extends Controller
 
         $reply->save();
 
-        //$reply->discussion->user->notify(new ReplyAdded($reply));
+
+
+        $reply->discussion->user->notify(new ReplyAdded($reply));
 
         return new ReplyResource($reply);
     }
